@@ -58,6 +58,7 @@ Here are some example snippets to help you get started creating a container.
 version: "2.1"
 services:
   chrome:
+    privileged: true
     image: ghcr.io/saahirlol/chrome:latest
     container_name: chrome
     environment:

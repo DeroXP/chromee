@@ -24,10 +24,10 @@ RUN \
     /var/lib/apt/lists/* \
     /var/tmp/*
 RUN bash /install.sh
+
 # add local files
 RUN chmod 777 /root
 COPY /root /
 # ports and volumes
 EXPOSE 3000
 VOLUME /config
-
