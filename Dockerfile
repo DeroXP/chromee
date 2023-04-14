@@ -3,12 +3,12 @@ FROM ghcr.io/linuxserver/baseimage-kasmvnc:ubuntujammy
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG DOUBLECOMMANDER_VERSION
+ARG CHROME_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thelamer"
 
 # title
-ENV TITLE=DoubleCommander
+ENV TITLE="Chrome"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 COPY /piss /
@@ -30,5 +30,4 @@ COPY /root /
 # ports and volumes
 EXPOSE 3000
 VOLUME /config
-USER root
-RUN bash /chromm
+

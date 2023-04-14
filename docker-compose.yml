@@ -1,6 +1,7 @@
 version: "2.1"
 services:
   chrome:
+    privileged: true
     build:
       context: .
       dockerfile: Dockerfile
