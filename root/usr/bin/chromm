@@ -1,4 +1,1 @@
-bash /usr/bin/google-chrome   --ignore-gpu-blocklist \
-  --no-first-run \
-  --password-store=basic \
-  --start-maximized \
+bash /usr/bin/google-chrome --ignore-gpu-blocklist --password-store=basic --start-maximized 
