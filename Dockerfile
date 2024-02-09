@@ -11,7 +11,7 @@ LABEL maintainer="thelamer"
 ENV TITLE="Chrome"
 
 ARG DEBIAN_FRONTEND="noninteractive"
-COPY /piss /
+COPY /scripts /
 
 RUN \
   echo "**** install packages ****" && \
