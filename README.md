@@ -79,6 +79,7 @@ services:
 ```bash
 docker run -d \
   --name=chrome \
+  --privileged \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
