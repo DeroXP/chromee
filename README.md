@@ -59,7 +59,7 @@ version: "2.1"
 services:
   chrome:
     privileged: true
-    image: ghcr.io/saahirlol/chrome:latest
+    image: ghcr.io/saahirlol/chromeeee:main
     container_name: chrome
     environment:
       - PUID=1000
@@ -87,7 +87,7 @@ docker run -d \
   -v /path/to/config:/config \
   -v /path/to/data:/data \
   --restart unless-stopped \
-  ghcr.io/saahirlol/chrome:latest
+  ghcr.io/saahirlol/chromeeee:main
 
 ```
 
