@@ -88,6 +88,7 @@ docker run -d \
   -v /path/to/config:/config \
   -v /path/to/data:/data \
   --restart unless-stopped \
+  --shm-size="2gb" \
   ghcr.io/saahirlol/chromeeee:main
 
 ```
