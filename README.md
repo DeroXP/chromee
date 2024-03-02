@@ -195,16 +195,24 @@ Below are the instructions for updating containers:
 
 ## Building locally
 
-If you want to make local modifications to these images for development purposes or just to customize the logic:
+I'm redoing this whole thing since the last one was shit and had to figur out my own :(
+(btw i only use windows so this is the method for windows ill see if i can on linux or kali)
 
-```bash
-git clone https://github.com/linuxserver/docker-chrome.git
-cd docker-chrome
-docker build \
-  --no-cache \
-  --pull \
-  -t ghcr.io/saahirlol/chrome:latest .
-```
+1. open terminal ```crtl + s cmd```
+2. in your terminal type ```git clone https://github.com/DeroXP/chromee.git```
+3. now find that folder just created it should be name **chromee**
+4. find a .zip file named **hjdkshj** and unzip
+5. do ```cd chromee\hjdkshj```
+6. now make sure you have [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/) downloaded
+7. open Docker Desktop
+8. now in terminal do ```docker build -f Dockerfile .```
+9. then ```docker build --no-cache --pull -t ghcr.io/saahirlol/chrome:latest .```
+10. ```docker run --rm --privileged multiarch/qemu-user-static:register --reset```
+11. ```docker run -d -p 8080:80 -e ENV_VARIABLE=value ghcr.io/saahirlol/chrome:latest```
+12. ```docker-compose up -d```
+13. now go into your Docker Desktop and your first container should be running
+14. press on expand on the hjdkshj and it should show your chrome container
+15. on ports there should be one running if not press run and then click the link then boom you're done.
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
 
