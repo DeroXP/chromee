@@ -212,7 +212,12 @@ I'm redoing this whole thing since the last one was shit and had to figur out my
 12. ```docker-compose up -d```
 13. now go into your Docker Desktop and your first container should be running
 14. press on expand on the hjdkshj and it should show your chrome container
-15. on ports there should be one running if not press run and then click the link then boom you're done.
+15. on ports there should be one running if not press run
+16. only use 3000, 3001 does not work 'bad request'
+17. press on the external link should open in your browser
+18. and when you're in the site it could say at the top 'xterm' just press the x to close it
+19. right click and press chrome if this does not work go back into your terminal and do ```docker-compose restart```
+20. now everything should be fine and you're done.
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
 
