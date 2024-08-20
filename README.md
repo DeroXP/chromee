@@ -1,7 +1,7 @@
 ### LOL I forgot to explain how to work this....
 Just type intothe terminal ```docker-compose```
 
-
+-------------------------------------------------------------------------------
 
 Simply pulling `ghcr.io/saahirlol/chrome:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
