@@ -1,5 +1,5 @@
 ### LOL I forgot to explain how to work this....
-Just type intothe terminal ```docker-compose```. And if you are still confused just type ```docker-compose up -d```, then you should get started.
+Just type into the terminal ```docker-compose```. And if you are still confused just type ```docker-compose up -d```, then you should get started.
 
 -------------------------------------------------------------------------------
 
