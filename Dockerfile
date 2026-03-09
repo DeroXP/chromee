@@ -51,4 +51,4 @@ RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor
 
 EXPOSE 3000
 
-CMD ["bash", "-c", "vncserver -kill :1 2>/dev/null; USER=root vncserver :1 -geometry 1280x720 -depth 24 && kasmvnchweb --vnc localhost:5901 --listen 0.0.0.0:${PORT} & wait"]
+CMD ["bash", "-c", "find / -name '*kasmvnc*' -o -name '*vnc*' 2>/dev/null | grep -v proc && ls /usr/bin/ | grep -i vnc"]
