@@ -1,6 +1,5 @@
 FROM ubuntu:jammy
 
-# set version label
 ARG BUILD_DATE
 ARG VERSION
 ARG CHROME_VERSION
@@ -12,7 +11,6 @@ ENV PORT=3000
 ENV CUSTOM_PORT=3000
 ARG DEBIAN_FRONTEND="noninteractive"
 
-# Install KasmVNC + dependencies manually (replaces the base image)
 RUN apt-get update && \
   apt-get install -y \
     curl wget ca-certificates gnupg2 \
@@ -23,25 +21,29 @@ RUN apt-get update && \
     xfce4 xfce4-terminal dbus-x11 \
     python3-numpy \
     procps && \
-  # Install KasmVNC
-  ARCH=$(dpkg --print-architecture) && \
+  apt-get clean && \
+  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+
+COPY /scripts /
+COPY /root /
+RUN chmod 777 /root
+
+# Install KasmVNC
+RUN ARCH=$(dpkg --print-architecture) && \
   wget -q "https://github.com/kasmtech/KasmVNC/releases/download/v1.3.0/kasmvncserver_jammy_1.3.0_${ARCH}.deb" -O /tmp/kasmvnc.deb && \
   apt-get install -y /tmp/kasmvnc.deb && \
   rm /tmp/kasmvnc.deb && \
   apt-get clean && \
-  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+  rm -rf /var/lib/apt/lists/*
 
-# Install Chrome
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb && \
-  apt-get install -y /tmp/chrome.deb && \
-  rm /tmp/chrome.deb && \
+# Install Chrome via apt repo (more reliable than direct wget)
+RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg && \
+  echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+  apt-get update && \
+  (apt-get install -y google-chrome-stable || (sleep 5 && apt-get install -y google-chrome-stable) || (sleep 10 && apt-get install -y google-chrome-stable)) && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-COPY /root /
-
-RUN chmod 777 /root
-
 EXPOSE 3000
 
-CMD ["bash", "-c", "kasmvncserver -select-de xfce -passwd password -noxstartup & sleep 2 && CUSTOM_PORT=${PORT} /usr/share/kasmvnc/www/kasmvnc_defaults.sh; tail -f /dev/null"]
+CMD ["bash", "-c", "CUSTOM_PORT=${PORT} /init"]
