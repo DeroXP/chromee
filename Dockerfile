@@ -28,22 +28,18 @@ COPY /scripts /
 COPY /root /
 RUN chmod 777 /root
 
-# Install KasmVNC
 RUN apt-get update && \
   apt-get install -y \
-    ssl-cert \
-    libswitch-perl \
-    libyaml-tiny-perl \
-    libhash-merge-simple-perl \
-    liblist-moreutils-perl \
-    libtry-tiny-perl \
-    libdatetime-timezone-perl && \
-  ARCH=$(dpkg --print-architecture) && \
-  wget -q "https://github.com/kasmtech/KasmVNC/releases/download/v1.3.0/kasmvncserver_jammy_1.3.0_${ARCH}.deb" -O /tmp/kasmvnc.deb && \
-  apt-get install -y /tmp/kasmvnc.deb && \
-  rm /tmp/kasmvnc.deb && \
+    curl wget ca-certificates gnupg2 \
+    fonts-liberation \
+    libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 \
+    libcups2 libgtk-3-0 libnspr4 libnss3 \
+    libu2f-udev libvulkan1 \
+    xfce4 xfce4-terminal dbus-x11 \
+    python3-numpy procps \
+    xvfb x11vnc && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # Install Chrome via apt repo (more reliable than direct wget)
 RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg && \
@@ -55,4 +51,4 @@ RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor
 
 EXPOSE 3000
 
-CMD ["bash", "-c", "CUSTOM_PORT=${PORT} /init"]
+CMD ["bash", "-c", "vncserver -kill :1 2>/dev/null; USER=root vncserver :1 -geometry 1280x720 -depth 24 && kasmvnchweb --vnc localhost:5901 --listen 0.0.0.0:${PORT} & wait"]
