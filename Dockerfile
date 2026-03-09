@@ -58,5 +58,6 @@ CMD ["bash", "-c", "\
   sleep 2 && \
   x11vnc -display :1 -nopw -listen 0.0.0.0 -xkb -forever -noxdamage & \
   sleep 1 && \
+  DISPLAY=:1 google-chrome --no-sandbox --disable-dev-shm-usage --disable-gpu & \
   websockify --web=/usr/share/novnc 0.0.0.0:3000 localhost:5900 \
 "]
