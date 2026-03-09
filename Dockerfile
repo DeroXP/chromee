@@ -29,7 +29,16 @@ COPY /root /
 RUN chmod 777 /root
 
 # Install KasmVNC
-RUN ARCH=$(dpkg --print-architecture) && \
+RUN apt-get update && \
+  apt-get install -y \
+    ssl-cert \
+    libswitch-perl \
+    libyaml-tiny-perl \
+    libhash-merge-simple-perl \
+    liblist-moreutils-perl \
+    libtry-tiny-perl \
+    libdatetime-timezone-perl && \
+  ARCH=$(dpkg --print-architecture) && \
   wget -q "https://github.com/kasmtech/KasmVNC/releases/download/v1.3.0/kasmvncserver_jammy_1.3.0_${ARCH}.deb" -O /tmp/kasmvnc.deb && \
   apt-get install -y /tmp/kasmvnc.deb && \
   rm /tmp/kasmvnc.deb && \
