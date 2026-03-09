@@ -11,7 +11,7 @@ LABEL maintainer="thelamer"
 ENV TITLE="Chrome"
 ARG DEBIAN_FRONTEND="noninteractive"
 
-# Railway requires PORT env var and listens on 0.0.0.0
+# Railway dynamically assigns PORT
 ENV PORT=3000
 ENV LISTEN_IP=0.0.0.0
 
@@ -45,12 +45,6 @@ RUN bash /install.sh
 RUN chmod 777 /root
 COPY /root /
 
-# Railway dynamically assigns PORT — expose it
 EXPOSE ${PORT}
 
-# Railway doesn't support persistent volumes — use /tmp or /config as ephemeral
-VOLUME /config
-
-# Railway needs the app to bind to $PORT on 0.0.0.0
-# KasmVNC uses CUSTOM_PORT or LISTEN_IP env vars — set them at runtime
 CMD ["bash", "-c", "CUSTOM_PORT=${PORT} /init"]
