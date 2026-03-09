@@ -37,7 +37,7 @@ RUN apt-get update && \
     libu2f-udev libvulkan1 \
     xfce4 xfce4-terminal dbus-x11 \
     python3-numpy procps \
-    xvfb x11vnc && \
+    xvfb x11vnc novnc websockify && \
   apt-get clean && \
   rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
@@ -51,4 +51,13 @@ RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor
 
 EXPOSE 3000
 
-CMD ["bash", "-c", "find / -name '*kasmvnc*' -o -name '*vnc*' 2>/dev/null | grep -v proc && ls /usr/bin/ | grep -i vnc"]
+CMD ["bash", "-c", "\
+  apt-get install -y novnc websockify 2>/dev/null; \
+  Xvfb :1 -screen 0 1280x720x24 & \
+  sleep 1 && \
+  DISPLAY=:1 startxfce4 & \
+  sleep 2 && \
+  x11vnc -display :1 -nopw -listen 0.0.0.0 -xkb -forever & \
+  sleep 1 && \
+  websockify --web=/usr/share/novnc 0.0.0.0:${PORT} localhost:5900 \
+"]
