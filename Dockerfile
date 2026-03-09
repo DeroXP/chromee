@@ -52,12 +52,11 @@ RUN curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor
 EXPOSE 3000
 
 CMD ["bash", "-c", "\
-  apt-get install -y novnc websockify 2>/dev/null; \
   Xvfb :1 -screen 0 1280x720x24 & \
   sleep 1 && \
   DISPLAY=:1 startxfce4 & \
   sleep 2 && \
-  x11vnc -display :1 -nopw -listen 0.0.0.0 -xkb -forever & \
+  x11vnc -display :1 -nopw -listen 0.0.0.0 -xkb -forever -noxdamage & \
   sleep 1 && \
-  websockify --web=/usr/share/novnc 0.0.0.0:${PORT} localhost:5900 \
+  websockify --web=/usr/share/novnc 0.0.0.0:3000 localhost:5900 \
 "]
